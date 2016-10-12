@@ -1,0 +1,386 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[safeinputenc,giveninits=true]{biblatex}
+\usepackage{hyperref}
+\usepackage{todonotes}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{xspace}
+\usepackage{mathtools}
+\usepackage[all]{xy}
+\usepackage{pdfpages}
+\usepackage{cleveref}
+\usepackage{tikz-cd}
+
+\newtheorem{proposition}{Proposition}
+
+\title{Beck-Chevalley condition: proof details}
+\date{October 2016}
+\author{Auke Booij}
+\begin{document}
+
+\maketitle
+
+\begin{proposition}
+  Let the following square be a pullback square in a weak topos with
+  $g$ and $h$ monic.
+
+  \begin{tikzcd}
+    A
+      \arrow[r,"f"]
+      \arrow[d,"g",rightarrowtail]
+      \arrow[dr, phantom, "\lrcorner", very near start]
+    &
+    B
+      \arrow[d,"h",rightarrowtail]
+    \\
+    C
+      \arrow[r,"k"]
+    &
+    D
+  \end{tikzcd}
+
+  Then the following diagram (the Beck-Chevalley square) commutes.
+
+  \begin{tikzcd}
+    PA
+      \arrow[d,"\exists g"]
+      \arrow[dr, phantom, "\bigcirc" pos=0.6]
+    &
+    PB
+      \arrow[l,"Pf"]
+      \arrow[d,"\exists h"]
+    \\
+    PC
+    &
+    PD
+      \arrow[l,"Pk"]
+  \end{tikzcd}
+\end{proposition}
+
+\begin{proof}
+  We show that the Beck-Chevalley square both ways round names the
+  vertical composition $E_f \rightarrowtail PB \times A
+  \overset{1\times g}{\rightarrowtail} PB \times C$ in the following
+  diagram.
+
+  \begin{tikzcd}[row sep=large]
+    E_f
+      \arrow[r]
+      \arrow[d, "\tilde{f}", rightarrowtail]
+    &
+    \in_B
+      \arrow[d, rightarrowtail]
+    \\
+    PB \times A
+      \arrow[r,"1 \times f"]
+      \arrow[d,"1 \times g", rightarrowtail]
+    &
+    PB \times B
+      \arrow[d,"1 \times h", rightarrowtail]
+    \\
+    PB \times C
+      \arrow[r,"1 \times k"]
+    &
+    PB \times D
+  \end{tikzcd}
+
+  % The lower square is a pullback (by assumption), and so is the upper
+  % (by definition of $E_f$), hence the outer rectangle is.
+
+  \medskip
+
+  We will first show that the composite $(1 \times g) \circ \tilde{f}$ is named by
+  $\exists g \circ Pf$.
+  To show this, we have to show that the red outer square in the
+  following diagram is a pullback.
+  Here, the small squares $I$ and $III$ are pullbacks by definition.
+  If $II$ were also a pullback, we could use pullback pasting, but
+  alas this merely commutes.
+
+  \begin{tikzcd}[row sep=large]
+    E_f
+      \arrow[r, red]
+      \arrow[d, "\tilde{f}", red, rightarrowtail]
+      \arrow[dr, phantom, "\lrcorner", very near start]
+      \arrow[dr, phantom, "I"]
+    &
+    \in_A
+      \arrow[r, red]
+      \arrow[d, rightarrowtail]
+      \arrow[ddr, phantom, "\lrcorner", very near start]
+      \arrow[ddr, phantom, "III"]
+    &
+    \in_C
+      \arrow[dd, red, rightarrowtail]
+    \\
+    PB \times A
+      \arrow[r, "Pf \times 1"]
+      \arrow[d, "1 \times g", red, rightarrowtail]
+      \arrow[dr, phantom, "II"]
+    &
+    PA \times A
+      \arrow[d, "1 \times g", rightarrowtail]
+    &
+    \\
+    PB \times C
+      \arrow[r, "Pf \times 1", red]
+    &
+    PA \times C
+      \arrow[r, "\exists g \times 1", red]
+    &
+    PC \times C
+  \end{tikzcd}
+
+  We prove its universal property directly.
+  So let $X$ be a cone.
+
+  \begin{tikzcd}[row sep=large]
+    X
+      \arrow[rddd, "l", bend right]
+      \arrow[rrrd, "m", bend left=15]
+      \arrow[rrd, "n", dotted]
+      \arrow[rdd, "o" description, dotted]
+      \arrow[rd, dotted]
+    & & & \\
+    &
+    E_f
+      \arrow[r, red]
+      \arrow[d, "\tilde{f}", red, rightarrowtail]
+      \arrow[dr, phantom, "\lrcorner", very near start]
+      \arrow[dr, phantom, "I"]
+    &
+    \in_A
+      \arrow[r, red]
+      \arrow[d, rightarrowtail]
+      \arrow[ddr, phantom, "\lrcorner", very near start]
+      \arrow[ddr, phantom, "III"]
+    &
+    \in_C
+      \arrow[dd, red, rightarrowtail]
+    \\
+    &
+    PB \times A
+      \arrow[r, "Pf \times 1"]
+      \arrow[d, "1 \times g", red, rightarrowtail]
+      \arrow[dr, phantom, "II"]
+    &
+    PA \times A
+      \arrow[d, "1 \times g", rightarrowtail]
+    &
+    \\
+    &
+    PB \times C
+      \arrow[r, "Pf \times 1", red]
+    &
+    PA \times C
+      \arrow[r, "\exists g \times 1", red]
+    &
+    PC \times C
+  \end{tikzcd}
+
+  By the fact that square $III$ is a pullback, we obtain
+  the map $n$ via the maps $m$ and $(Pf \times 1) \circ l$.
+
+  The map $o$ is defined as:
+  \[
+    o := \left ( \pi_0 \circ l , \pi_1 \circ \in_A \circ n \right )
+  \]
+  The fact that $(o,n)$ form a cone for pullback square $I$ is then
+  easily verified.
+  Hence we obtain the required map $X \to E_f$, which is a morphism of
+  cones for the outer square (check!).
+
+  To show that it is unique, suppose that there is another morphism of
+  cones.
+  Then their compositions along the left vertical (i.e.\ along $(1
+  \times g) \circ \tilde{f}$) are both equal to $l$.
+  But $(1 \times g) \circ \tilde{f}$ is monic, so the maps are equal.
+
+  \medskip
+
+  We will now show that $(1 \times g) \circ \tilde{f}$ is named by
+  $Pk \circ \exists h$.
+  This amounts to showing that the following outer red square is a
+  pullback.
+
+  \begin{tikzcd}[column sep=small, row sep=small]
+    &
+    \in_B
+      \arrow[rr]
+      \arrow[dd, rightarrowtail]
+      \arrow[ddddrr, phantom, "III", very near start]
+    &&
+    \in_D
+      \arrow[dddd, rightarrowtail]
+      \arrow[dddddl, phantom, "IV", pos=0.08]
+    &
+    \\
+%
+%
+    E_f
+      \arrow[ur]
+      \arrow[rr, dotted, red, crossing over]
+      \arrow[dd, "\tilde{f}", red, rightarrowtail]
+      \arrow[dr, phantom, "I"]
+    &&
+    E_k
+      \arrow[ur]
+      \arrow[rr, red, crossing over]
+      \arrow[dddd, "\tilde{k}", crossing over, rightarrowtail]
+    &&
+    \in_C
+      \arrow[dddd, red, rightarrowtail]
+      \arrow[ddddll, phantom, "V", very near start]
+    \\
+%
+%
+    &
+    PB \times B
+      \arrow[dd, "1 \times h", rightarrowtail]
+    &&&
+    \\
+%
+%
+    PB \times A
+      \arrow[ur, "1 \times f"]
+      \arrow[dd, "1 \times g", red, rightarrowtail]
+      \arrow[dr, phantom, "II"]
+    &&&&
+    \\
+%
+%
+    &
+    PB \times D
+      \arrow[rr, "\exists h \times 1" near start]
+    &&
+    PD \times D
+    &
+    \\
+%
+%
+    PB \times C
+      \arrow[ur, "1 \times k"]
+      \arrow[rr, "\exists h \times 1", red]
+    &&
+    PD \times C
+      \arrow[ur, "1 \times k"]
+      \arrow[rr, "Pk \times 1", red]
+    &&
+    PC \times C
+  \end{tikzcd}
+
+  The small (non-composed) squares $I$, $III$, $IV$ and $V$ are
+  pullbacks by definition.
+  Square $II$ is a pullback by assumption.
+
+  The map $E_f \to E_k$ exists because square $IV$ is a
+  pullback. (exercise: how do we make $E_f$ into a cone?)
+
+  To show that the red square is a pullback, let $X$ be an arbitrary
+  cone over it.
+
+  \begin{tikzcd}[column sep=small, row sep=small]
+    X
+      \arrow[ddddddr, "l", bend right]
+      \arrow[rrrrrdd, "m", bend left]
+      \arrow[rrrdd, "n" near start, dotted, crossing over]
+      \arrow[rrd, "o", dotted, bend left]
+      \arrow[rdd, dotted]
+    &&&&&
+    \\
+%
+%
+    &&
+    \in_B
+      \arrow[rr]
+      \arrow[dd, rightarrowtail]
+      \arrow[ddddrr, phantom, "III", very near start]
+    &&
+    \in_D
+      \arrow[dddd, rightarrowtail]
+      \arrow[dddddl, phantom, "IV", pos=0.08]
+    &
+    \\
+%
+%
+    &
+    E_f
+      \arrow[ur]
+      \arrow[rr, dotted, red, crossing over]
+      \arrow[dd, "\tilde{f}", red, rightarrowtail]
+      \arrow[dr, phantom, "I"]
+    &&
+    E_k
+      \arrow[ur]
+      \arrow[rr, red, crossing over]
+      \arrow[dddd, "\tilde{k}", crossing over, rightarrowtail]
+    &&
+    \in_C
+      \arrow[dddd, red, rightarrowtail]
+      \arrow[ddddll, phantom, "V", very near start]
+    \\
+%
+%
+    &&
+    PB \times B
+      \arrow[dd, "1 \times h", rightarrowtail]
+    &&&
+    \\
+%
+%
+    &
+    PB \times A
+      \arrow[ur, "1 \times f"]
+      \arrow[dd, "1 \times g", red, rightarrowtail]
+      \arrow[dr, phantom, "II"]
+    &&&&
+    \\
+%
+%
+    &&
+    PB \times D
+      \arrow[rr, "\exists h \times 1" near start]
+    &&
+    PD \times D
+    &
+    \\
+%
+%
+    &
+    PB \times C
+      \arrow[ur, "1 \times k"]
+      \arrow[rr, "\exists h \times 1", red]
+    &&
+    PD \times C
+      \arrow[ur, "1 \times k"]
+      \arrow[rr, "Pk \times 1", red]
+    &&
+    PC \times C
+  \end{tikzcd}
+
+  $n$ is obtained by pullback square $V$ from $m$ and $(\exists h
+  \times 1) \circ l$.
+  So we obtain $o$ by pullback square $III$.
+  Hence, because $I$ and $II$ are pullbacks, we obtain the required
+  map $X \to E_f$.
+
+  Just like before, uniqueness of that map follows from the fact that
+  $(1 \times g) \circ \tilde{f}$ is monic.
+
+  \medskip
+
+  Hence, because names of subobjects are unique, we get the required commutativity.
+\end{proof}
+
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
